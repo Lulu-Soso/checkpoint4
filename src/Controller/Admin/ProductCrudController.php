@@ -29,7 +29,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setTargetFieldName('name'),
 
             ImageField::new('illustration')
-                ->setBasePath('uploads/') // Où est-ce qu'on veut mettre les fichiers
+                ->setBasePath('uploads/') // Dans le dossier où l'on veut mettre les fichiers
                 ->setUploadDir('public/uploads/') // Il faut indiquer le chemin complet
                 ->setUploadedFileNamePattern('[randomhash].[extension]') // encoder le nom du fichier image par un nombre aléatoire, une chaine de caractère
                 ->setRequired(false),
