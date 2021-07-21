@@ -48,7 +48,7 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Merci de saisir votre adresse email'
                 ]
             ])
-            // RepeatedType permet pour le même propriété, deux champs différents qui doivent avoir exactement le même contenu
+            // RepeatedType permet pour le même propriété, de générer deux champs différents qui doivent avoir exactement le même contenu
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques.',
