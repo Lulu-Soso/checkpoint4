@@ -41,6 +41,13 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories); // donner un paramètre qui aura le nom categories, et sa valeur, c'est qu'il y a dans $search->categories
         }
 
+        // si recherche textuelle demandée par l'utilisateur
+        if (!empty($search->string)) {
+            $query = $query
+                ->andWhere('p.name LIKE :string') // Est-ce que ça ressemble à la recherche que je t'envoie dans mon objet recherche
+                ->setParameter('string', "%{$search->string}%"); // "%{$search->string}%" = recherche partielle
+        }
+
         // je veux que tu me retournes la query, que tu l'executes et la crée, et que tu me retournes les resultats
         return $query->getQuery()->getResult();
     }

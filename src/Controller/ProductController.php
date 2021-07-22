@@ -37,6 +37,9 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $products = $this->entityManager->getRepository(Product::class)->findWithSearch($search);
+        } else {
+            // récupère tous les produits à l'aide de l'ORM doctrine
+            $products = $this->entityManager->getRepository(Product::class)->findAll();
         }
 
         return $this->render('product/index.html.twig', [
