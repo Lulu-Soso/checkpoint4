@@ -29,4 +29,23 @@ class ProductController extends AbstractController
             'products' => $products
         ]);
     }
+
+    /**
+     * @Route("/produit/{slug}", name="product")
+     */
+    public function show($slug): Response
+    {
+        // récupère tous les produits à l'aide de l'ORM doctrine
+        $product = $this->entityManager->getRepository(Product::class)->findOneBySlug($slug);
+
+
+        // Si tu ne trouves pas de produit alors fais une redirection vers la liste des produits
+        if (!$product) {
+            return $this->redirectToRoute('products');
+        }
+
+        return $this->render('product/show.html.twig', [
+            'product' => $product
+        ]);
+    }
 }
