@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RegisterController extends AbstractController
 {
@@ -49,6 +50,12 @@ class RegisterController extends AbstractController
             $this->entityManager->persist($user); // persister = figer la data car besoin de l'enregistrer
 
             $this->entityManager->flush(); // execute et enregistre dans la base de donnée
+
+            //Automatic login after registration
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            $this->container->get('session')->set('_security_main', serialize($token));
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('register/index.html.twig', [

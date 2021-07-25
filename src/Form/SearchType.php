@@ -21,7 +21,7 @@ class SearchType extends AbstractType
                 'label' => false,
                 'required' => false, // non car on peut simplement chercher des catégories
                 'attr' => [
-                    'placeholder' => 'Votre recherche ...',
+                    'placeholder' => 'Recherchez votre produit ...',
                     'class' => 'form-control-sm' // réduire la taille de l'input avec la class de bootstrap
                 ]
             ])
@@ -33,7 +33,7 @@ class SearchType extends AbstractType
                 'expanded' => true // permet d'avoir une vue en checkbox, pour pouvoir sélectionner plusieurs valeurs
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Filtrer',
+                'label' => 'Rechercher',
                 'attr' => [
                     'class' => 'btn-block btn-info'
                 ]

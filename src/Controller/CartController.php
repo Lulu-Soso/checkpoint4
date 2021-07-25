@@ -23,20 +23,8 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart): Response
     {
-        // panier complet avec un tableau vide
-        $cartComplete = [];
-
-        // a chaque produit, je voudrais enrichir ce $cartComplete de data de mon produit que Doctrine va aller chercher en BDD
-        // qu'il injecte dans $cartComplete une nouvelle entrée et que cette nouvelle entrée ait le produit complet la quantité
-        foreach ($cart->get() as $id => $quantity) {
-            $cartComplete[] = [
-                'product' => $this->entityManager->getRepository(Product::class)->findOneById($id),
-                'quantity' => $quantity
-            ];
-        }
-
         return $this->render('cart/index.html.twig', [
-            'cart' => $cartComplete
+            'cart' => $cart->getFull()
         ]);
     }
 
@@ -58,5 +46,15 @@ class CartController extends AbstractController
         $cart->remove();
 
         return $this->redirectToRoute('products');
+    }
+
+    /**
+     * @Route("/cart/delete/{id}", name="delete_to_cart")
+     */
+    public function delete(Cart $cart, $id): Response
+    {
+        $cart->delete($id);
+
+        return $this->redirectToRoute('cart');
     }
 }
